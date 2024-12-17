@@ -1,0 +1,19 @@
+﻿namespace API.Shared.Models.DDD;
+
+public interface IAggregate : IEntity
+{
+    public IReadOnlyList<IDomainEvent> DomainEvents { get; }
+    public void ClearDomainEvents();
+    public List<IDomainEvent> DequeueEvents();
+}
+
+public interface IAggregate<T> : IAggregate, IEntity<T>;
+
+public abstract class Aggregate<TId> : Entity<TId>, IAggregate<TId>
+{
+    private readonly List<IDomainEvent> _domainEvents = [];
+    public IReadOnlyList<IDomainEvent> DomainEvents => _domainEvents.AsReadOnly();
+    protected void AddDomainEvent(IDomainEvent domainEvent) => _domainEvents.Add(domainEvent);
+    public void ClearDomainEvents() => _domainEvents.Clear();
+    public List<IDomainEvent> DequeueEvents() => _domainEvents.ToList();
+}
