@@ -1,15 +1,22 @@
 ﻿using System.Reflection;
 using API.Shared.Behaviors;
+using Carter;
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
+using Shared.Helpers;
 
 namespace API.Shared.Extensions;
 
-public static class MediatorExtension
+public static class AssemblyStackExtension
 {
-    public static IServiceCollection AddMediatorFromAssemblies(this IServiceCollection services,
-        params Assembly[] assemblies)
+    public static void AddAssemblyScan(this IServiceCollection services, params Assembly[] assemblies)
     {
+        services.AddCarter(configurator: configurator =>
+        {
+            var modules = AssembliesHelper.GetInterfaceTypes<ICarterModule>(assemblies);
+            configurator.WithModules(modules);
+        });
+
         services.AddMediatR(config =>
         {
             config.RegisterServicesFromAssemblies(assemblies);
@@ -18,6 +25,5 @@ public static class MediatorExtension
         });
 
         services.AddValidatorsFromAssemblies(assemblies);
-        return services;
     }
 }

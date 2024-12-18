@@ -1,4 +1,5 @@
-﻿using API.Shared.Exceptions;
+﻿using API.Shared.Constants;
+using API.Shared.Exceptions;
 using FluentValidation;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http;
@@ -67,7 +68,7 @@ internal partial class GlobalExceptionHandler
         var problemDetails = new ProblemDetails
         {
             Status = statusCode,
-            Title = "(Domain) Business Logic Violation",
+            Title = HttpTitle.DomainViolation,
             Detail = exception.Message,
             Instance = httpContext.Request.Path,
             Type = "https://example.com/probs/domain-error"
@@ -91,7 +92,7 @@ internal partial class GlobalExceptionHandler
         var problemDetails = new ProblemDetails
         {
             Status = statusCode,
-            Title = "Internal Server Error",
+            Title = HttpTitle.InternalServerError,
             Detail = "An unexpected error occurred while processing your request.",
             Instance = httpContext.Request.Path
         };

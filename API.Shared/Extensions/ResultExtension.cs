@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using API.Shared.Constants;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Shared;
 
@@ -27,12 +28,15 @@ internal static class ProblemDetailsFactory
 {
     public static ProblemDetails Create(Result result)
     {
+        if (result.StatusCode == StatusCodes.Status200OK)
+            throw new Exception("Success result cannot be problem details");
+
         var title = result.StatusCode switch
         {
-            400 => "Bad Request",
-            409 => "Conflict",
-            404 => "Not Found",
-            _ => "Internal Server Error"
+            400 => HttpTitle.BadRequest,
+            409 => HttpTitle.Conflict,
+            404 => HttpTitle.NotFound,
+            _ => HttpTitle.InternalServerError,
         };
 
         var problemDetails = new ProblemDetails

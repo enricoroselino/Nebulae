@@ -4,13 +4,13 @@ using Shared;
 
 namespace API.Server;
 
-public class MyEndpointModule : ICarterModule
+public class TesterEndpoint : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
-        app.MapGet("/", () =>
+        app.MapGet("/tester", () =>
         {
-            var result = Result.BadRequest("Hello World!");
+            var result = Result.Conflict("Run purrfectly");
             return result.ToMinimalApiResult();
         });
     }
