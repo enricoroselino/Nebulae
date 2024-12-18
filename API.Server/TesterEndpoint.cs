@@ -1,6 +1,6 @@
-﻿using API.Shared.Extensions;
+﻿using Ardalis.Result;
+using Ardalis.Result.AspNetCore;
 using Carter;
-using Shared;
 
 namespace API.Server;
 
