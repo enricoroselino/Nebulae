@@ -1,8 +1,4 @@
-﻿using API.Modules.Identity.Models;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
-
-namespace API.Modules.Identity.Persistence.Configurations;
+﻿namespace API.Modules.Identity.Persistence.Configurations;
 
 public class UserConfiguration : IEntityTypeConfiguration<User>
 {

@@ -1,8 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using API.Shared.Models.DDD;
-using Microsoft.AspNetCore.Http.HttpResults;
-
-namespace API.Modules.Identity.Models;
+﻿namespace API.Modules.Identity.Models;
 
 public sealed record UserId(Guid Value);
 
