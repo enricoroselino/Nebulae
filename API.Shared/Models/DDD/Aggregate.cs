@@ -7,7 +7,7 @@ public interface IAggregate : IEntity
     public List<IDomainEvent> DequeueEvents();
 }
 
-public interface IAggregate<T> : IAggregate, IEntity<T>;
+public interface IAggregate<TId> : IAggregate, IEntity<TId>;
 
 public abstract class Aggregate<TId> : Entity<TId>, IAggregate<TId>
 {

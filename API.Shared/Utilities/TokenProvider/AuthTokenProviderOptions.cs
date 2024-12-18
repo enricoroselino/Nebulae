@@ -1,10 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace API.BuildingBlocks;
+namespace API.Shared.Utilities.TokenProvider;
 
-public class TokenProviderOptions
+public class AuthTokenProviderOptions
 {
-    public const string Section = nameof(TokenProviderOptions);
+    public const string Section = nameof(AuthTokenProviderOptions);
     private const int KeyLength = 64;
 
     [Required(ErrorMessage = "The Key is required.")]

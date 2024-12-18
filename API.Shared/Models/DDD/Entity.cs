@@ -13,7 +13,7 @@ public abstract class Entity : IEntity
     public DateTime? ModifiedOn { get; set; }
 }
 
-public abstract class Entity<TKey> : Entity, IEntity<TKey>
+public abstract class Entity<TId> : Entity, IEntity<TId>
 {
-    public TKey Id { get; set; } = default!;
+    public TId Id { get; set; } = default!;
 }
