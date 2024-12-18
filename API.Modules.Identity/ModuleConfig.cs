@@ -1,6 +1,4 @@
-﻿using API.Modules.Identity.Persistence;
-using API.Shared.Extensions;
-using Microsoft.Extensions.DependencyInjection;
+﻿using API.Shared.Extensions;
 
 namespace API.Modules.Identity;
 

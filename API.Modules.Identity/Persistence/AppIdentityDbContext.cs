@@ -1,8 +1,4 @@
-﻿using API.Modules.Identity.Models;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-
-namespace API.Modules.Identity.Persistence;
+﻿namespace API.Modules.Identity.Persistence;
 
 public class AppIdentityDbContext : DbContext
 {

@@ -1,6 +1,4 @@
-﻿using API.Shared.Models.DDD;
-
-namespace API.Modules.Identity.Models;
+﻿namespace API.Modules.Identity.Models;
 
 public record RoleId(Guid Value);
 
