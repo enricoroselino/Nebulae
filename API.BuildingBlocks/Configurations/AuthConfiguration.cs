@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using API.Shared.Utilities.TokenProvider;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.DependencyInjection;
@@ -12,13 +13,15 @@ public static class AuthenticationConfiguration
     public static AuthenticationBuilder AddAuthConfiguration(this IServiceCollection services)
     {
         services
-            .AddOptions<TokenProviderOptions>()
-            .BindConfiguration(TokenProviderOptions.Section)
+            .AddOptions<AuthTokenProviderOptions>()
+            .BindConfiguration(AuthTokenProviderOptions.Section)
             .ValidateDataAnnotations()
             .ValidateOnStart();
 
+        services.AddScoped<IAuthTokenProvider, JwtProvider>();
+
         using var serviceProvider = services.BuildServiceProvider();
-        var tokenOptions = serviceProvider.GetRequiredService<IOptions<TokenProviderOptions>>();
+        var tokenOptions = serviceProvider.GetRequiredService<IOptions<AuthTokenProviderOptions>>();
 
         var key = Encoding.UTF8.GetBytes(tokenOptions.Value.Key);
         var symmetricKey = new SymmetricSecurityKey(key);
