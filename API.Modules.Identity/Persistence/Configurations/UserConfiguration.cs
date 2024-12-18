@@ -28,5 +28,14 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
             .IsRequired();
         builder.Property(c => c.CompatId)
             .IsRequired(false);
+
+        builder.Property(c => c.Fullname)
+            .HasMaxLength(70)
+            .IsRequired();
+
+        builder.HasMany(u => u.UserRoles)
+            .WithOne(ur => ur.User)
+            .HasForeignKey(ur => ur.UserId)
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }

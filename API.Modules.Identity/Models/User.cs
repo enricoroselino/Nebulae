@@ -17,19 +17,24 @@ public class User : Entity<UserId>
     public string Username { get; private set; }
     public string PasswordHash { get; private set; }
     public string Email { get; private set; }
+    public string Fullname { get; private set; }
 
-    public static User Create(string username, string email, string passwordHash)
+    // Navigation
+    public virtual ICollection<UserRole> UserRoles { get; private set; }
+
+    public static User Create(string username, string email, string fullname, string passwordHash)
     {
         return new User()
         {
             Id = new UserId(Guid.NewGuid()),
             Username = username,
             Email = email,
-            PasswordHash = passwordHash
+            PasswordHash = passwordHash,
+            Fullname = fullname,
         };
     }
 
-    public static User CreateCompat(int compatId, string username, string email, string passwordHash)
+    public static User CreateCompat(int compatId, string username, string email, string fullname, string passwordHash)
     {
         return new User()
         {
@@ -37,7 +42,8 @@ public class User : Entity<UserId>
             CompatId = compatId,
             Username = username,
             Email = email,
-            PasswordHash = passwordHash
+            PasswordHash = passwordHash,
+            Fullname = fullname,
         };
     }
 }

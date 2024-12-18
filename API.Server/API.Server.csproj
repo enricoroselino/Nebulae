@@ -15,6 +15,7 @@
 
     <ItemGroup>
         <ProjectReference Include="..\API.BuildingBlocks\API.BuildingBlocks.csproj"/>
+        <ProjectReference Include="..\API.Modules.Identity\API.Modules.Identity.csproj" />
     </ItemGroup>
 
 </Project>
