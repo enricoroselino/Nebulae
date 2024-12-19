@@ -1,8 +1,8 @@
-﻿namespace API.Modules.Identity.Features.DeleteRolesFromUser;
+﻿namespace API.Modules.Identity.Features.DeleteUserRoles;
 
 public record DeleteRoleFromUserRequest(Guid UserId, List<Guid> RoleIds);
 
-public class DeleteRolesFromUserEndpoint : ICarterModule
+public class DeleteUserRolesEndpoint : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
@@ -13,7 +13,7 @@ public class DeleteRolesFromUserEndpoint : ICarterModule
                 [FromBody] DeleteRoleFromUserRequest dto,
                 CancellationToken cancellationToken) =>
             {
-                var command = new DeleteRolesFromUserCommand(
+                var command = new DeleteUserRolesCommand(
                     new UserId(dto.UserId),
                     dto.RoleIds.Select(x => new RoleId(x)).ToList()
                 );

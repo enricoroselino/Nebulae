@@ -19,7 +19,7 @@ public class AddRoleCommandHandler : ICommandHandler<AddRoleCommand, Result>
         var exists = await _dbContext.Roles
             .AnyAsync(c => EF.Functions.Like(c.Name, request.RoleName), cancellationToken);
 
-        if (exists) return Result.Success();
+        if (exists) return Result.Conflict("Role already exists");
 
         _dbContext.Roles.Add(Role.Create(request.RoleName.Titleize()));
         await _dbContext.SaveChangesAsync(cancellationToken);
