@@ -15,7 +15,7 @@ public class User : Entity<UserId>
     public string Fullname { get; private set; } = string.Empty;
 
     // Navigation
-    public virtual ICollection<UserRole> UserRoles { get; private set; }
+    public virtual ICollection<UserRole> UserRoles { get; private set; } = null!;
 
     public static User Create(string username, string email, string fullname, string passwordHash)
     {
