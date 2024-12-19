@@ -1,8 +1,8 @@
-﻿namespace API.Modules.Identity.Features.AddRolesToUser;
+﻿namespace API.Modules.Identity.Features.AddUserRoles;
 
 public record AddRoleToUserRequest(Guid UserId, List<Guid> RoleIds);
 
-public class AddRolesToUserEndpoint : ICarterModule
+public class AddUserRolesEndpoint : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
@@ -13,7 +13,7 @@ public class AddRolesToUserEndpoint : ICarterModule
                 [FromBody] AddRoleToUserRequest dto,
                 CancellationToken cancellationToken) =>
             {
-                var command = new AddRolesToUserCommand(
+                var command = new AddUserRolesCommand(
                     new UserId(dto.UserId),
                     dto.RoleIds.Select(x => new RoleId(x)).ToList()
                 );

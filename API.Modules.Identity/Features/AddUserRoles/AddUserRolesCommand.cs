@@ -1,10 +1,10 @@
 ﻿using API.Shared.Models.CQRS;
 
-namespace API.Modules.Identity.Features.AddRolesToUser;
+namespace API.Modules.Identity.Features.AddUserRoles;
 
-public record AddRolesToUserCommand(UserId UserId, List<RoleId> RoleIds) : ICommand<Result>;
+public record AddUserRolesCommand(UserId UserId, List<RoleId> RoleIds) : ICommand<Result>;
 
-public class AddRoleToUserCommandHandler : ICommandHandler<AddRolesToUserCommand, Result>
+public class AddRoleToUserCommandHandler : ICommandHandler<AddUserRolesCommand, Result>
 {
     private readonly AppIdentityDbContext _dbContext;
     private readonly IIdentityRepository _identityRepository;
@@ -15,7 +15,7 @@ public class AddRoleToUserCommandHandler : ICommandHandler<AddRolesToUserCommand
         _identityRepository = identityRepository;
     }
 
-    public async Task<Result> Handle(AddRolesToUserCommand request, CancellationToken cancellationToken)
+    public async Task<Result> Handle(AddUserRolesCommand request, CancellationToken cancellationToken)
     {
         var isUserExists = await _identityRepository.CheckUserExist(request.UserId, cancellationToken);
         if (!isUserExists) return Result.NotFound("User not found");
