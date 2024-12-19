@@ -14,4 +14,11 @@
       <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.0" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Features\Auth\" />
+      <Folder Include="Features\IAM\RoleClaim\" />
+      <Folder Include="Features\IAM\UserClaim\" />
+      <Folder Include="Features\IAM\UserRoles\" />
+    </ItemGroup>
+
 </Project>

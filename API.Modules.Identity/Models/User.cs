@@ -16,6 +16,7 @@ public class User : Entity<UserId>
 
     // Navigation
     public virtual ICollection<UserRole> UserRoles { get; private set; } = null!;
+    public virtual ICollection<UserClaim> UserClaims { get; private set; } = null!;
 
     public static User Create(string username, string email, string fullname, string passwordHash)
     {

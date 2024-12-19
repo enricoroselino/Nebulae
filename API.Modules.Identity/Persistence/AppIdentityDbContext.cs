@@ -12,6 +12,7 @@ public class AppIdentityDbContext : DbContext
     }
 
     public DbSet<User> Users => Set<User>();
+    public DbSet<UserClaim> UserClaims => Set<UserClaim>();
     public DbSet<UserRole> UserRoles => Set<UserRole>();
     public DbSet<Role> Roles => Set<Role>();
     public DbSet<RoleClaim> RoleClaims => Set<RoleClaim>();

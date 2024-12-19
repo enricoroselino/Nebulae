@@ -2,6 +2,7 @@
 
 global using API.Modules.Identity.Models;
 global using API.Modules.Identity.Persistence;
+global using API.Shared.Models.CQRS;
 global using API.Shared.Models.DDD;
 global using Ardalis.Result;
 global using Ardalis.Result.AspNetCore;
