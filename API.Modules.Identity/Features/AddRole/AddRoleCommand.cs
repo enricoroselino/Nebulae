@@ -1,19 +1,10 @@
 ﻿using API.Shared.Models.CQRS;
 using Ardalis.Result;
-using FluentValidation;
 using Humanizer;
 
 namespace API.Modules.Identity.Features.AddRole;
 
 public record AddRoleCommand(string RoleName) : ICommand<Result>;
-
-public class AddRoleCommandValidator : AbstractValidator<AddRoleCommand>
-{
-    public AddRoleCommandValidator()
-    {
-        RuleFor(c => c.RoleName).NotEmpty();
-    }
-}
 
 public class AddRoleCommandHandler : ICommandHandler<AddRoleCommand, Result>
 {

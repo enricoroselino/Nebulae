@@ -1,14 +1,22 @@
 ﻿using API.Shared.Extensions;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 
 namespace API.Modules.Identity;
 
 public static class ModuleConfig
 {
-    public const string IamGroup = "iam";
-    
+    internal const string IamGroup = "iam";
+    internal const string AuthGroup = "auth";
+
     public static void AddIdentityModule(this IServiceCollection services)
     {
         services.AddAssemblyScan(typeof(ModuleConfig).Assembly);
-        services.AddDbContext<AppIdentityDbContext>();
+        services.AddDbContext<AppIdentityDbContext>((provider, builder) =>
+        {
+            var interceptors = provider.GetServices<ISaveChangesInterceptor>();
+            builder.AddInterceptors(interceptors);
+        });
+
+        services.AddScoped<IIdentityRepository, IdentityRepository>();
     }
 }

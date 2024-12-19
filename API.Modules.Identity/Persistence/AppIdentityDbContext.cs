@@ -27,6 +27,5 @@ public class AppIdentityDbContext : DbContext
         base.OnConfiguring(optionsBuilder);
         var conn = _configuration.GetConnectionString("AppDb");
         optionsBuilder.UseSqlServer(conn, options => options.MigrationsHistoryTable("__EFMigrationsHistory", Schema));
-        optionsBuilder.UseLazyLoadingProxies();
     }
 }

@@ -4,16 +4,15 @@ public sealed record UserId(Guid Value);
 
 public class User : Entity<UserId>
 {
-    // Required by EF Core
     private User()
     {
     }
 
     public int? CompatId { get; private set; }
-    public string Username { get; private set; }
-    public string PasswordHash { get; private set; }
-    public string Email { get; private set; }
-    public string Fullname { get; private set; }
+    public string Username { get; private set; } = string.Empty;
+    public string PasswordHash { get; private set; } = string.Empty;
+    public string Email { get; private set; } = string.Empty;
+    public string Fullname { get; private set; } = string.Empty;
 
     // Navigation
     public virtual ICollection<UserRole> UserRoles { get; private set; }
