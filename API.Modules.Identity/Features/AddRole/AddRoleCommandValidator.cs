@@ -4,6 +4,8 @@ public class AddRoleCommandValidator : AbstractValidator<AddRoleCommand>
 {
     public AddRoleCommandValidator()
     {
-        RuleFor(c => c.RoleName).NotEmpty();
+        RuleFor(c => c.RoleName)
+            .NotEmpty()
+            .MaximumLength(50);
     }
 }
