@@ -7,20 +7,20 @@ public record DeleteRoleCommand(RoleId RoleId) : ICommand<Result>;
 
 public class DeleteRoleCommandHandler : ICommandHandler<DeleteRoleCommand, Result>
 {
-    private readonly AppIdentityDbContext _context;
+    private readonly AppIdentityDbContext _dbContext;
 
-    public DeleteRoleCommandHandler(AppIdentityDbContext context)
+    public DeleteRoleCommandHandler(AppIdentityDbContext dbContext)
     {
-        _context = context;
+        _dbContext = dbContext;
     }
 
     public async Task<Result> Handle(DeleteRoleCommand request, CancellationToken cancellationToken)
     {
-        var role = await _context.Roles.FindAsync([request.RoleId], cancellationToken);
+        var role = await _dbContext.Roles.FindAsync([request.RoleId], cancellationToken);
         if (role is null) return Result.Success();
 
-        _context.Roles.Remove(role);
-        await _context.SaveChangesAsync(cancellationToken);
+        _dbContext.Roles.Remove(role);
+        await _dbContext.SaveChangesAsync(cancellationToken);
         return Result.Success();
     }
 }

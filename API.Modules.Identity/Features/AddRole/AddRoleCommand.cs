@@ -8,22 +8,22 @@ public record AddRoleCommand(string RoleName) : ICommand<Result>;
 
 public class AddRoleCommandHandler : ICommandHandler<AddRoleCommand, Result>
 {
-    private readonly AppIdentityDbContext _context;
+    private readonly AppIdentityDbContext _dbContext;
 
-    public AddRoleCommandHandler(AppIdentityDbContext context)
+    public AddRoleCommandHandler(AppIdentityDbContext dbContext)
     {
-        _context = context;
+        _dbContext = dbContext;
     }
 
     public async Task<Result> Handle(AddRoleCommand request, CancellationToken cancellationToken)
     {
-        var exists = await _context.Roles
+        var exists = await _dbContext.Roles
             .AnyAsync(c => EF.Functions.Like(c.Name, request.RoleName), cancellationToken);
 
         if (exists) return Result.Success();
 
-        _context.Roles.Add(Role.Create(request.RoleName.Titleize()));
-        await _context.SaveChangesAsync(cancellationToken);
+        _dbContext.Roles.Add(Role.Create(request.RoleName.Titleize()));
+        await _dbContext.SaveChangesAsync(cancellationToken);
         return Result.Success();
     }
 }

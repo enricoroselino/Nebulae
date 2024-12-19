@@ -6,22 +6,22 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 
-namespace API.Modules.Identity.Features.AddRoleToUser;
+namespace API.Modules.Identity.Features.AddRolesToUser;
 
 public record AddRoleToUserRequest(Guid UserId, List<Guid> RoleIds);
 
-public class AddRoleToUserEndpoint : ICarterModule
+public class AddRolesToUserEndpoint : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup(ModuleConfig.IamGroup);
 
-        group.MapPatch("/user-role", async (
+        group.MapPatch("/user-roles", async (
                 ISender sender,
                 [FromBody] AddRoleToUserRequest dto,
                 CancellationToken cancellationToken) =>
             {
-                var command = new AddRoleToUserCommand(
+                var command = new AddRolesToUserCommand(
                     new UserId(dto.UserId),
                     dto.RoleIds.Select(x => new RoleId(x)).ToList()
                 );

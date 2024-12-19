@@ -14,7 +14,7 @@ public class DeleteRoleEndpoint : ICarterModule
     {
         var group = app.MapGroup(ModuleConfig.IamGroup);
 
-        group.MapDelete("/role/{roleId:guid}", async (
+        group.MapDelete("/roles/{roleId:guid}", async (
             ISender mediator,
             [FromRoute] Guid roleId,
             CancellationToken cancellationToken) =>

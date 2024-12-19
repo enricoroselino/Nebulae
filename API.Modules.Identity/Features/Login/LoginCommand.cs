@@ -12,20 +12,20 @@ public record LoginCommand(string Username, string Password) : ICommand<Result<A
 
 public class LoginAppCommandHandler : ICommandHandler<LoginCommand, Result<AuthToken>>
 {
-    private readonly AppIdentityDbContext _context;
+    private readonly AppIdentityDbContext _dbContext;
     private readonly IAuthTokenProvider _tokenProvider;
     private readonly IHasher _hasher;
 
-    public LoginAppCommandHandler(AppIdentityDbContext context, IAuthTokenProvider tokenProvider, IHasher hasher)
+    public LoginAppCommandHandler(AppIdentityDbContext dbContext, IAuthTokenProvider tokenProvider, IHasher hasher)
     {
-        _context = context;
+        _dbContext = dbContext;
         _tokenProvider = tokenProvider;
         _hasher = hasher;
     }
 
     public async Task<Result<AuthToken>> Handle(LoginCommand request, CancellationToken cancellationToken)
     {
-        var user = await _context.Users
+        var user = await _dbContext.Users
             .FirstOrDefaultAsync(user => user.Username == request.Username, cancellationToken);
 
         if (user is null || !_hasher.VerifyHash(request.Password, user.PasswordHash)) return Result.Unauthorized();

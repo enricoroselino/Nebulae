@@ -14,7 +14,7 @@ public class AddRoleEndpoint : ICarterModule
     {
         var group = app.MapGroup(ModuleConfig.IamGroup);
 
-        group.MapPost("/role", async (
+        group.MapPost("/roles", async (
                 ISender mediator,
                 [FromQuery] string roleName,
                 CancellationToken cancellationToken) =>

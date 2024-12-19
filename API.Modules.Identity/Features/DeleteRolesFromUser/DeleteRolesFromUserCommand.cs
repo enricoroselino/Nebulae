@@ -1,22 +1,22 @@
 ﻿using API.Shared.Models.CQRS;
 using Ardalis.Result;
 
-namespace API.Modules.Identity.Features.DeleteRoleFromUser;
+namespace API.Modules.Identity.Features.DeleteRolesFromUser;
 
-public record DeleteRoleFromUserCommand(UserId UserId, List<RoleId> RoleIds) : ICommand<Result>;
+public record DeleteRolesFromUserCommand(UserId UserId, List<RoleId> RoleIds) : ICommand<Result>;
 
-public class DeleteRoleFromUserCommandHandler : ICommandHandler<DeleteRoleFromUserCommand, Result>
+public class DeleteRoleFromUserCommandHandler : ICommandHandler<DeleteRolesFromUserCommand, Result>
 {
-    private readonly AppIdentityDbContext _context;
+    private readonly AppIdentityDbContext _dbContext;
     private readonly IIdentityRepository _identityRepository;
 
-    public DeleteRoleFromUserCommandHandler(AppIdentityDbContext context, IIdentityRepository identityRepository)
+    public DeleteRoleFromUserCommandHandler(AppIdentityDbContext dbContext, IIdentityRepository identityRepository)
     {
-        _context = context;
+        _dbContext = dbContext;
         _identityRepository = identityRepository;
     }
 
-    public async Task<Result> Handle(DeleteRoleFromUserCommand request, CancellationToken cancellationToken)
+    public async Task<Result> Handle(DeleteRolesFromUserCommand request, CancellationToken cancellationToken)
     {
         var isUserExists = await _identityRepository.CheckUserExist(request.UserId, cancellationToken);
         if (!isUserExists) return Result.NotFound("User not found");
@@ -24,7 +24,7 @@ public class DeleteRoleFromUserCommandHandler : ICommandHandler<DeleteRoleFromUs
         var requestedRoles = await _identityRepository.GetMatchingRoleIds(request.RoleIds, cancellationToken);
         if (requestedRoles.Count == 0) return Result.NotFound("Roles not found");
 
-        var rolesToRemove = await _context.UserRoles
+        var rolesToRemove = await _dbContext.UserRoles
             .AsNoTracking()
             .Include(c => c.Role)
             .Where(c =>
@@ -34,8 +34,8 @@ public class DeleteRoleFromUserCommandHandler : ICommandHandler<DeleteRoleFromUs
 
         if (rolesToRemove.Count == 0) return Result.Success();
 
-        _context.UserRoles.RemoveRange(rolesToRemove);
-        await _context.SaveChangesAsync(cancellationToken);
+        _dbContext.UserRoles.RemoveRange(rolesToRemove);
+        await _dbContext.SaveChangesAsync(cancellationToken);
         return Result.Success();
     }
 }
