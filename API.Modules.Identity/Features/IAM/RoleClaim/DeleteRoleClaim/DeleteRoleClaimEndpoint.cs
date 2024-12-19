@@ -8,7 +8,7 @@ public class DeleteRoleClaimEndpoint : ICarterModule
     {
         var group = app.MapGroup(ModuleConfig.IamGroup);
 
-        group.MapDelete("/roles/claims", async (
+        group.MapDelete("/roles-claims", async (
                 ISender mediator,
                 [FromBody] DeleteRoleClaimRequest dto,
                 CancellationToken cancellationToken) =>

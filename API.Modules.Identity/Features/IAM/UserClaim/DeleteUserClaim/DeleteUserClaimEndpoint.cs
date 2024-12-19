@@ -8,7 +8,7 @@ public class DeleteUserClaimEndpoint : ICarterModule
     {
         var group = app.MapGroup(ModuleConfig.IamGroup);
 
-        group.MapDelete("/users/claims", async (
+        group.MapDelete("/users-claims", async (
                 ISender mediator,
                 [FromBody] DeleteUserClaimRequest dto,
                 CancellationToken cancellationToken) =>

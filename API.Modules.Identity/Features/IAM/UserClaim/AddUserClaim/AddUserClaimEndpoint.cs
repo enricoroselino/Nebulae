@@ -12,7 +12,7 @@ public class AddUserClaimEndpoint : ICarterModule
     {
         var group = app.MapGroup(ModuleConfig.IamGroup);
 
-        group.MapPost("/users/claims", async (
+        group.MapPost("/users-claims", async (
             ISender mediator, 
             [FromBody] AddUserClaimRequest dto,
             CancellationToken cancellationToken) =>

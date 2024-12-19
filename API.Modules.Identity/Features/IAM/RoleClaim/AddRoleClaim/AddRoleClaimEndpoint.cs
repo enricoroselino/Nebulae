@@ -12,7 +12,7 @@ public class AddRoleClaimEndpoint : ICarterModule
     {
         var group = app.MapGroup(ModuleConfig.IamGroup);
 
-        group.MapPost("/roles/claims", async (
+        group.MapPost("/roles-claims", async (
                 ISender mediator,
                 [FromBody] AddRoleClaimRequest dto,
                 CancellationToken cancellationToken) =>

@@ -21,7 +21,7 @@ public class DeleteUserRolesEndpoint : ICarterModule
                 var result = await mediator.Send(command, cancellationToken);
                 return result.ToMinimalApiResult();
             })
-            .WithSummary("Removes one or more roles from an existing user.")
+            .WithSummary("Remove one or more roles from an existing user.")
             .WithDescription(
                 "Remove specified roles from a user. It expects a list of role IDs and removes them from the user’s account. If the user does not have the roles, no action is taken.");
     }
