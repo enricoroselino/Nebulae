@@ -6,22 +6,22 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 
-namespace API.Modules.Identity.Features.DeleteRoleFromUser;
+namespace API.Modules.Identity.Features.DeleteRolesFromUser;
 
 public record DeleteRoleFromUserRequest(Guid UserId, List<Guid> RoleIds);
 
-public class DeleteRoleFromUserEndpoint : ICarterModule
+public class DeleteRolesFromUserEndpoint : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup(ModuleConfig.IamGroup);
 
-        group.MapDelete("/user-role", async (
+        group.MapDelete("/user-roles", async (
                 ISender mediator,
                 [FromBody] DeleteRoleFromUserRequest dto,
                 CancellationToken cancellationToken) =>
             {
-                var command = new DeleteRoleFromUserCommand(
+                var command = new DeleteRolesFromUserCommand(
                     new UserId(dto.UserId),
                     dto.RoleIds.Select(x => new RoleId(x)).ToList()
                 );
