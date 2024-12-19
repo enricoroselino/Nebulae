@@ -1,6 +1,5 @@
 ﻿using API.Modules.Identity.Dtos;
 using API.Shared.Models.CQRS;
-using Ardalis.Result;
 
 namespace API.Modules.Identity.Features.GetUserById;
 

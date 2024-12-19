@@ -1,11 +1,4 @@
-﻿using Ardalis.Result.AspNetCore;
-using Carter;
-using MediatR;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Routing;
-
-namespace API.Modules.Identity.Features.GetUserById;
+﻿namespace API.Modules.Identity.Features.GetUserById;
 
 public class GetUserByIdEndpoint : ICarterModule
 {

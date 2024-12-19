@@ -1,5 +1,4 @@
 ﻿using API.Shared.Models.CQRS;
-using Ardalis.Result;
 using Shared.Utilities.Hasher;
 
 namespace API.Modules.Identity.Features.Register;

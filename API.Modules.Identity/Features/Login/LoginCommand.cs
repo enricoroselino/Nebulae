@@ -2,7 +2,6 @@
 using System.Security.Claims;
 using API.Shared.Models.CQRS;
 using API.Shared.Utilities.TokenProvider;
-using Ardalis.Result;
 using Shared.Models;
 using Shared.Utilities.Hasher;
 

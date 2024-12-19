@@ -1,12 +1,4 @@
-﻿using Ardalis.Result.AspNetCore;
-using Carter;
-using MediatR;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Routing;
-
-namespace API.Modules.Identity.Features.Login;
+﻿namespace API.Modules.Identity.Features.Login;
 
 public record LoginEndpointRequest(string Username, string Password);
 
