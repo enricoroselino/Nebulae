@@ -2,6 +2,10 @@
 
 public class UserDto
 {
+    private UserDto()
+    {
+    }
+
     public Guid Id { get; private set; }
     public int? CompatId { get; private set; }
     public string FullName { get; private set; } = string.Empty;

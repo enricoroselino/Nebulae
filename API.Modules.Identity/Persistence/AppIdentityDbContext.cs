@@ -12,8 +12,9 @@ public class AppIdentityDbContext : DbContext
     }
 
     public DbSet<User> Users => Set<User>();
-    public DbSet<Role> Roles => Set<Role>();
     public DbSet<UserRole> UserRoles => Set<UserRole>();
+    public DbSet<Role> Roles => Set<Role>();
+    public DbSet<RoleClaim> RoleClaims => Set<RoleClaim>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

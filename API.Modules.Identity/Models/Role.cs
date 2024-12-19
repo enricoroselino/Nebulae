@@ -5,7 +5,10 @@ public record RoleId(Guid Value);
 public class Role : Entity<RoleId>
 {
     public string Name { get; private set; } = string.Empty;
-    
+
+    // navigation
+    public virtual ICollection<RoleClaim> RoleClaims { get; private set; } = null!;
+
     private Role()
     {
     }
