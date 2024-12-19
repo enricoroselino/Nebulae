@@ -11,5 +11,6 @@ public static class ModuleDiscovery
 
     public static void UseModules(this WebApplication app)
     {
+        app.UseIdentityModule();
     }
 }

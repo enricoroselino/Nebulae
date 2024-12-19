@@ -19,9 +19,6 @@ namespace API.Modules.Identity.Migrations
             modelBuilder
                 .HasDefaultSchema("Identity")
                 .HasAnnotation("ProductVersion", "9.0.0")
-                .HasAnnotation("Proxies:ChangeTracking", false)
-                .HasAnnotation("Proxies:CheckEquality", false)
-                .HasAnnotation("Proxies:LazyLoading", true)
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -45,6 +42,37 @@ namespace API.Modules.Identity.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Roles", "Identity");
+                });
+
+            modelBuilder.Entity("API.Modules.Identity.Models.RoleClaim", b =>
+                {
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ClaimType")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("ClaimValue")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<DateTime?>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("RoleId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("RoleClaims", "Identity");
                 });
 
             modelBuilder.Entity("API.Modules.Identity.Models.User", b =>
@@ -106,6 +134,17 @@ namespace API.Modules.Identity.Migrations
                     b.ToTable("UserRoles", "Identity");
                 });
 
+            modelBuilder.Entity("API.Modules.Identity.Models.RoleClaim", b =>
+                {
+                    b.HasOne("API.Modules.Identity.Models.Role", "Role")
+                        .WithMany("RoleClaims")
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Role");
+                });
+
             modelBuilder.Entity("API.Modules.Identity.Models.UserRole", b =>
                 {
                     b.HasOne("API.Modules.Identity.Models.Role", "Role")
@@ -123,6 +162,11 @@ namespace API.Modules.Identity.Migrations
                     b.Navigation("Role");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("API.Modules.Identity.Models.Role", b =>
+                {
+                    b.Navigation("RoleClaims");
                 });
 
             modelBuilder.Entity("API.Modules.Identity.Models.User", b =>

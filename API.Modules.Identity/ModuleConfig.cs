@@ -18,4 +18,9 @@ public static class ModuleConfig
 
         services.AddScoped<IIdentityRepository, IdentityRepository>();
     }
+
+    public static void UseIdentityModule(this WebApplication app)
+    {
+        app.MigrateDatabase<AppIdentityDbContext>().GetAwaiter().GetResult();
+    }
 }
