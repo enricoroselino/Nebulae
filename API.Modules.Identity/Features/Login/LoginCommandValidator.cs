@@ -1,10 +1,13 @@
-﻿namespace API.Modules.Identity.Features.Login;
+﻿using System.Text.RegularExpressions;
+using API.Modules.Identity.Constants;
+
+namespace API.Modules.Identity.Features.Login;
 
 public class LoginCommandValidator : AbstractValidator<LoginCommand>
 {
     public LoginCommandValidator()
     {
-        RuleFor(command => command.Username).NotEmpty();
-        RuleFor(command => command.Password).NotEmpty();
+        RuleFor(c => c.Username).NotEmpty();
+        RuleFor(c => c.Password).NotEmpty();
     }
 }

@@ -17,11 +17,14 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
         builder.Property(c => c.Username)
             .HasMaxLength(32)
             .IsRequired();
+        
         builder.Property(c => c.Email)
             .HasMaxLength(320)
             .IsRequired();
+        
         builder.Property(c => c.PasswordHash)
             .IsRequired();
+        
         builder.Property(c => c.CompatId)
             .IsRequired(false);
 
