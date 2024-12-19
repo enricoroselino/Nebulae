@@ -1,6 +1,4 @@
-﻿using FluentValidation;
-
-namespace API.Modules.Identity.Features.AddRole;
+﻿namespace API.Modules.Identity.Features.AddRole;
 
 public class AddRoleCommandValidator : AbstractValidator<AddRoleCommand>
 {

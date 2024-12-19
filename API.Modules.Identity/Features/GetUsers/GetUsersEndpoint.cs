@@ -1,9 +1,4 @@
 ﻿using System.Text.RegularExpressions;
-using Ardalis.Result.AspNetCore;
-using Carter;
-using MediatR;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Routing;
 
 namespace API.Modules.Identity.Features.GetUsers;
 

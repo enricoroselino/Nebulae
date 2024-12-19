@@ -1,6 +1,4 @@
-﻿using FluentValidation;
-
-namespace API.Modules.Identity.Features.DeleteRolesFromUser;
+﻿namespace API.Modules.Identity.Features.DeleteRolesFromUser;
 
 public class DeleteRolesFromUserCommandValidator : AbstractValidator<DeleteRolesFromUserCommand>
 {

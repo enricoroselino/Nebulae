@@ -1,6 +1,4 @@
-﻿using FluentValidation;
-
-namespace API.Modules.Identity.Features.Register;
+﻿namespace API.Modules.Identity.Features.Register;
 
 public class RegisterCommandValidator : AbstractValidator<RegisterCommand>
 {

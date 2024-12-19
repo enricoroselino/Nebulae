@@ -1,6 +1,4 @@
-﻿using FluentValidation;
-
-namespace API.Modules.Identity.Features.Login;
+﻿namespace API.Modules.Identity.Features.Login;
 
 public class LoginCommandValidator : AbstractValidator<LoginCommand>
 {
