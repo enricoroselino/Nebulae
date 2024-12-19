@@ -6,7 +6,7 @@ public record AddRoleClaimRequest(Guid RoleId, ClaimTypeEnum ClaimType, string C
 
 public class AddRoleClaimEndpoint : ICarterModule
 {
-    private static string ValidClaimTypeValues => string.Join(", ", Enum.GetNames<ClaimTypeEnum>());
+    private static string ClaimTypeValues => string.Join(", ", Enum.GetNames<ClaimTypeEnum>());
 
     public void AddRoutes(IEndpointRouteBuilder app)
     {
@@ -26,6 +26,6 @@ public class AddRoleClaimEndpoint : ICarterModule
                 return result.ToMinimalApiResult();
             })
             .WithSummary("Add role claim")
-            .WithDescription($"[{nameof(AddRoleClaimRequest.ClaimType)}] Possible Values : {ValidClaimTypeValues}");
+            .WithDescription($"[{nameof(AddRoleClaimRequest.ClaimType)}] Possible Values : {ClaimTypeValues}");
     }
 }

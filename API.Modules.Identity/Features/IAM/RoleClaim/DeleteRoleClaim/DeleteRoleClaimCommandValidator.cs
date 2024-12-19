@@ -4,6 +4,6 @@ public class DeleteRoleClaimCommandValidator : AbstractValidator<DeleteRoleClaim
 {
     public DeleteRoleClaimCommandValidator()
     {
-        RuleFor(r => r.RoleClaimIds).NotNull();
+        RuleForEach(r => r.RoleClaimIds).NotNull();
     }
 }
