@@ -5,13 +5,13 @@ public class UserRole
     private UserRole()
     {
     }
-    
-    public UserId UserId { get; private set; }
-    public RoleId RoleId { get; private set; }
+
+    public UserId UserId { get; private set; } = null!;
+    public RoleId RoleId { get; private set; } = null!;
 
     // Navigation
-    public virtual User User { get; private set; }
-    public virtual Role Role { get; private set; }
+    public virtual User User { get; private set; } = null!;
+    public virtual Role Role { get; private set; } = null!;
 
     public static UserRole Create(UserId userId, RoleId roleId)
     {
