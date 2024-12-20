@@ -2,7 +2,7 @@
 
 public sealed record UserId(Guid Value);
 
-public class User : Entity<UserId>
+public class User : Aggregate<UserId>
 {
     private User()
     {
@@ -13,6 +13,7 @@ public class User : Entity<UserId>
     public string PasswordHash { get; private set; } = string.Empty;
     public string Email { get; private set; } = string.Empty;
     public string Fullname { get; private set; } = string.Empty;
+    public DateTime? LastLogin { get; private set; }
 
     // Navigation
     public virtual ICollection<UserRole> UserRoles { get; private set; } = null!;
@@ -41,5 +42,10 @@ public class User : Entity<UserId>
             PasswordHash = passwordHash,
             Fullname = fullname,
         };
+    }
+
+    public void LoggedIn()
+    {
+        LastLogin = DateTime.UtcNow;
     }
 }

@@ -12,24 +12,25 @@ public record RegisterCommand(
 
 public class RegisterCommandHandler : ICommandHandler<RegisterCommand, Result>
 {
-    private readonly AppIdentityDbContext _dbContext;
+    private readonly IUserRepository _userRepository;
     private readonly IHasher _hasher;
 
-    public RegisterCommandHandler(AppIdentityDbContext dbContext, IHasher hasher)
+    public RegisterCommandHandler(IHasher hasher, IUserRepository userRepository)
     {
-        _dbContext = dbContext;
         _hasher = hasher;
+        _userRepository = userRepository;
     }
 
     public async Task<Result> Handle(RegisterCommand request, CancellationToken cancellationToken)
     {
-        var exists = await _dbContext.Users.AnyAsync(x => x.Username == request.Username, cancellationToken);
-        if (exists) return Result.Conflict("Username is already taken");
+        var isUserExist =
+            await _userRepository.IsUserExist(username: request.Username, cancellationToken: cancellationToken);
+        if (isUserExist) return Result.Conflict("Username is already taken");
 
         var hashedPassword = _hasher.Hash(request.Password);
         var newUser = User.Create(request.Username, request.Email, request.Fullname, hashedPassword);
-        await _dbContext.Users.AddAsync(newUser, cancellationToken);
-        await _dbContext.SaveChangesAsync(cancellationToken);
+        await _userRepository.Users.AddAsync(newUser, cancellationToken);
+        await _userRepository.SaveChangesAsync(cancellationToken);
         return Result.Success();
     }
 }

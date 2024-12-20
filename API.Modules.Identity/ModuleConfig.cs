@@ -16,7 +16,8 @@ public static class ModuleConfig
             builder.AddInterceptors(interceptors);
         });
 
-        services.AddScoped<IIdentityRepository, IdentityRepository>();
+        services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<IRoleRepository, RoleRepository>();
     }
 
     public static void UseIdentityModule(this WebApplication app)

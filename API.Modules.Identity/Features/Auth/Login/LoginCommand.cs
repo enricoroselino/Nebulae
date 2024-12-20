@@ -10,23 +10,27 @@ public record LoginCommand(string Username, string Password) : ICommand<Result<A
 
 public class LoginAppCommandHandler : ICommandHandler<LoginCommand, Result<AuthToken>>
 {
-    private readonly AppIdentityDbContext _dbContext;
-    private readonly IAuthTokenProvider _tokenProvider;
+    private readonly IUserRepository _userRepository;
     private readonly IHasher _hasher;
+    private readonly IAuthTokenProvider _tokenProvider;
 
-    public LoginAppCommandHandler(AppIdentityDbContext dbContext, IAuthTokenProvider tokenProvider, IHasher hasher)
+    public LoginAppCommandHandler(
+        IAuthTokenProvider tokenProvider,
+        IUserRepository userRepository,
+        IHasher hasher)
     {
-        _dbContext = dbContext;
         _tokenProvider = tokenProvider;
         _hasher = hasher;
+        _userRepository = userRepository;
     }
 
     public async Task<Result<AuthToken>> Handle(LoginCommand request, CancellationToken cancellationToken)
     {
-        var user = await _dbContext.Users
-            .FirstOrDefaultAsync(user => user.Username == request.Username, cancellationToken);
-
+        var user = await _userRepository.GetUser(username: request.Username, cancellationToken: cancellationToken);
         if (user is null || !_hasher.VerifyHash(request.Password, user.PasswordHash)) return Result.Unauthorized();
+
+        user.LoggedIn();
+        await _userRepository.SaveChangesAsync(cancellationToken);
 
         var claims = new List<Claim>
         {
