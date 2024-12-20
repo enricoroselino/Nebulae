@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Http.Json;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
 using Serilog;
 using Shared.Utilities.Hasher;
 
@@ -52,8 +53,7 @@ public static class BoilerPlates
         // API documentation
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGenAuthentication();
-
-        services.AddCarter();
+        services.ConfigureOptions<ConfigureSwaggerOptions>();
 
         // Authentication builder, chain here for another auth configuration
         services.AddAuthConfiguration();
@@ -83,7 +83,16 @@ public static class BoilerPlates
         if (!app.Environment.IsProduction())
         {
             app.UseSwagger();
-            app.UseSwaggerUI();
+            app.UseSwaggerUI(options =>
+            {
+                var descriptions = app.DescribeApiVersions().ToList();
+                descriptions.ForEach(description =>
+                {
+                    var url = $"/swagger/{description.GroupName}/swagger.json";
+                    var name = description.GroupName.ToUpperInvariant();
+                    options.SwaggerEndpoint(url, name);
+                });
+            });
         }
 
         app.UseCors(policyBuilder => policyBuilder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
