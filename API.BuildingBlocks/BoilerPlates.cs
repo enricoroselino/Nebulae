@@ -52,8 +52,8 @@ public static class BoilerPlates
 
         // API documentation
         services.AddEndpointsApiExplorer();
-        services.AddSwaggerGenAuthentication();
         services.ConfigureOptions<ConfigureSwaggerOptions>();
+        services.AddSwaggerGenAuthentication();
 
         // Authentication builder, chain here for another auth configuration
         services.AddAuthConfiguration();

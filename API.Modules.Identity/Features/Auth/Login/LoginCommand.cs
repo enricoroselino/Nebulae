@@ -1,6 +1,7 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using API.Shared.Utilities.TokenProvider;
+using Microsoft.Extensions.Options;
 using Shared.Helpers;
 using Shared.Models;
 using Shared.Utilities.Hasher;
@@ -12,17 +13,20 @@ public record LoginCommand(string Username, string Password) : ICommand<Result<A
 public class LoginAppCommandHandler : ICommandHandler<LoginCommand, Result<AuthToken>>
 {
     private readonly IUserRepository _userRepository;
-    private readonly IHasher _hasher;
     private readonly IAuthTokenProvider _tokenProvider;
+    private readonly IHasher _hasher;
+    private readonly AuthTokenProviderOptions _options;
 
     public LoginAppCommandHandler(
         IAuthTokenProvider tokenProvider,
         IUserRepository userRepository,
-        IHasher hasher)
+        IHasher hasher,
+        IOptions<AuthTokenProviderOptions> options)
     {
         _tokenProvider = tokenProvider;
         _hasher = hasher;
         _userRepository = userRepository;
+        _options = options.Value;
     }
 
     public async Task<Result<AuthToken>> Handle(LoginCommand request, CancellationToken cancellationToken)
@@ -39,8 +43,8 @@ public class LoginAppCommandHandler : ICommandHandler<LoginCommand, Result<AuthT
             new Claim(JwtRegisteredClaimNames.Name, user.Fullname),
             new Claim(JwtRegisteredClaimNames.Email, user.Email)
         };
-        
-        var authToken = _tokenProvider.Create(defaultClaims, "Nebulae");
+
+        var authToken = _tokenProvider.Create(defaultClaims, _options.ValidAudience);
         return Result.Success(authToken);
     }
 }

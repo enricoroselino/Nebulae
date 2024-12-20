@@ -32,7 +32,7 @@ public sealed class JwtProvider : IAuthTokenProvider
             audience: audience,
             claims: claims,
             notBefore: DateTime.UtcNow,
-            expires: DateTime.UtcNow,
+            expires: DateTime.UtcNow.Add(_options.ValidSpan),
             signingCredentials: _signingCredentials
         );
 

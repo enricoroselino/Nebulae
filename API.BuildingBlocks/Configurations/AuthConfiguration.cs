@@ -32,7 +32,7 @@ public static class AuthenticationConfiguration
             ValidateLifetime = true,
             ValidateIssuerSigningKey = true,
             ValidIssuer = tokenOptions.Value.ValidIssuer,
-            ValidAudiences = tokenOptions.Value.ValidAudiences,
+            ValidAudience = tokenOptions.Value.ValidAudience,
             IssuerSigningKey = symmetricKey,
             ClockSkew = TimeSpan.Zero,
         };

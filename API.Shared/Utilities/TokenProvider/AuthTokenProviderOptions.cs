@@ -12,12 +12,11 @@ public class AuthTokenProviderOptions
     public string Key { get; init; } = null!;
 
 
-    [Required(ErrorMessage = "The ValidIssuer is required.")]
+    [Required(ErrorMessage = "A ValidIssuer is required.")]
     public string ValidIssuer { get; init; } = null!;
 
-    [Required(ErrorMessage = "At least one ValidAudience is required.")]
-    [MinLength(1, ErrorMessage = "At least one ValidAudience must be specified.")]
-    public IEnumerable<string> ValidAudiences { get; init; } = [];
+    [Required(ErrorMessage = "A ValidAudience is required.")]
+    public string ValidAudience { get; init; } = null!;
 
     [Required(ErrorMessage = "The ValidSpan is required.")]
     public TimeSpan ValidSpan { get; init; }
