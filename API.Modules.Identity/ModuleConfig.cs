@@ -9,14 +9,15 @@ public static class ModuleConfig
 
     public static void AddIdentityModule(this IServiceCollection services)
     {
-        services.AddAssemblyScan(typeof(ModuleConfig).Assembly);
+        services.AddModuleScan(typeof(ModuleConfig).Assembly);
         services.AddDbContext<AppIdentityDbContext>((provider, builder) =>
         {
             var interceptors = provider.GetServices<ISaveChangesInterceptor>();
             builder.AddInterceptors(interceptors);
         });
 
-        services.AddScoped<IIdentityRepository, IdentityRepository>();
+        services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<IRoleRepository, RoleRepository>();
     }
 
     public static void UseIdentityModule(this WebApplication app)

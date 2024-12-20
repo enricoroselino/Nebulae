@@ -16,8 +16,6 @@
 
     <ItemGroup>
       <Folder Include="Features\Auth\" />
-      <Folder Include="Features\IAM\RoleClaim\" />
-      <Folder Include="Features\IAM\UserRoles\" />
     </ItemGroup>
 
 </Project>

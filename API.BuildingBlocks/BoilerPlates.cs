@@ -24,7 +24,8 @@ public static class BoilerPlates
 
         services.Configure<JsonOptions>(options =>
         {
-            // change enums into its string representation
+            // change enums into its string representation, globally
+            // same thing as [JsonConverter(typeof(JsonStringEnumConverter))]
             options.SerializerOptions.Converters.Add(new JsonStringEnumConverter());
 
             options.SerializerOptions.PropertyNameCaseInsensitive = true;

@@ -8,6 +8,7 @@ public class Role : Entity<RoleId>
 
     // navigation
     public virtual ICollection<RoleClaim> RoleClaims { get; private set; } = null!;
+    public virtual ICollection<UserRole> UserRoles { get; private set; } = null!;
 
     private Role()
     {
