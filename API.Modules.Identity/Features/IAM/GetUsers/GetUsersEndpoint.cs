@@ -14,6 +14,7 @@ public class GetUsersEndpoint : ICarterModule
             var result = await mediator.Send(query, cancellationToken);
             return result.ToMinimalApiResult();
         })
+        .RequireAuthorization()
         .WithSummary("Retrieve a list of users.")
         .WithDescription("Returns a list of users, optionally filtered and paginated.");
     }

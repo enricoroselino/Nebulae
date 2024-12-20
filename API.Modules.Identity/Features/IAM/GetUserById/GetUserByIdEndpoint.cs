@@ -15,6 +15,7 @@ public class GetUserByIdEndpoint : ICarterModule
                 var result = await mediator.Send(query, cancellationToken);
                 return result.ToMinimalApiResult();
             })
+            .RequireAuthorization()
             .WithSummary("Retrieve details of a specific user by their unique ID.")
             .WithDescription("Retrieve details of a specific user by their unique ID.");
     }

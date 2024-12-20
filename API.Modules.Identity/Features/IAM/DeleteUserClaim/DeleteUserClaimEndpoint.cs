@@ -17,6 +17,7 @@ public class DeleteUserClaimEndpoint : ICarterModule
                 var result = await mediator.Send(command, cancellationToken);
                 return result.ToMinimalApiResult();
             })
+            .RequireAuthorization()
             .WithSummary("Delete user claims based on their unique identifiers.")
             .WithDescription(
                 "Delete one or more user claims by providing a list of UserClaimIds in the request body. The request body should include a list of integer IDs representing the user claims to be deleted.");

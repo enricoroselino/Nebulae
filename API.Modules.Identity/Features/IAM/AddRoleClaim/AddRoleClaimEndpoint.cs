@@ -25,6 +25,7 @@ public class AddRoleClaimEndpoint : ICarterModule
                 var result = await mediator.Send(command, cancellationToken);
                 return result.ToMinimalApiResult();
             })
+            .RequireAuthorization()
             .WithSummary("Add role claim")
             .WithDescription($"[{nameof(AddRoleClaimRequest.ClaimType)}] Possible Values : {ClaimTypeValues}");
     }

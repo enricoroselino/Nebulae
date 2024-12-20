@@ -21,6 +21,7 @@ public class AddUserRolesEndpoint : ICarterModule
                 var result = await sender.Send(command, cancellationToken);
                 return result.ToMinimalApiResult();
             })
+            .RequireAuthorization()
             .WithSummary("Assign one or more roles from an existing user.")
             .WithDescription(
                 "Assigning one or more roles to an existing user. It expects a list of role IDs and assigns them to the specified user. If the user already has the roles, they are skipped.");

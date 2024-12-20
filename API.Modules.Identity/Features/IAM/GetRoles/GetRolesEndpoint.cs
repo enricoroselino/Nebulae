@@ -14,6 +14,7 @@ public class GetRolesEndpoint : ICarterModule
                 var result = await mediator.Send(query, cancellationToken);
                 return result.ToMinimalApiResult();
             })
+            .RequireAuthorization()
             .WithSummary("Retrieve a list of all available roles.")
             .WithDescription("Retrieve a list of all available roles.");
     }

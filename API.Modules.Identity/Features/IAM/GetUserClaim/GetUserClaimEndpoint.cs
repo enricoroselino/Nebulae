@@ -15,6 +15,7 @@ public class GetUserClaimEndpoint : ICarterModule
             var result = await mediator.Send(query, cancellationToken);
             return result.ToMinimalApiResult();
         })
+        .RequireAuthorization()
         .WithSummary("Get user claims")
         .WithSummary("Returns a list of user claims");
     }

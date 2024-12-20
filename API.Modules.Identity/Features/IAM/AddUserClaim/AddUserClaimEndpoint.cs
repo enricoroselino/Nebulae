@@ -25,6 +25,7 @@ public class AddUserClaimEndpoint : ICarterModule
                 var result = await mediator.Send(command, cancellationToken);
                 return result.ToMinimalApiResult();
             })
+            .RequireAuthorization()
             .WithSummary("Add user claim")
             .WithDescription($"[{nameof(AddUserClaimRequest.ClaimType)}] Possible Values : {ClaimTypeValues}");
         ;

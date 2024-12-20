@@ -15,6 +15,7 @@ public class DeleteRoleEndpoint : ICarterModule
             var result = await mediator.Send(command, cancellationToken);
             return result.ToMinimalApiResult();
         })
+        .RequireAuthorization()
         .WithSummary("Remove an existing role from the system.")
         .WithDescription("Remove a role is identified by its unique role ID. If the role is currently assigned to any users, it will be removed from their profiles, and the role will no longer be available for future assignments.");
     }

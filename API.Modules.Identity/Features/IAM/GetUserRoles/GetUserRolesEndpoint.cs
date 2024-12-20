@@ -15,6 +15,7 @@ public class GetUserRolesEndpoint : ICarterModule
             var result = await mediator.Send(query, cancellationToken);
             return result.ToMinimalApiResult();
         })
+        .RequireAuthorization()
         .WithSummary("Retrieve all roles assigned to a specific user.")
         .WithDescription("Fetch the list of roles assigned to a user identified by their unique userId. ");
     }
