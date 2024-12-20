@@ -9,7 +9,7 @@ public static class ModuleConfig
 
     public static void AddIdentityModule(this IServiceCollection services)
     {
-        services.AddAssemblyScan(typeof(ModuleConfig).Assembly);
+        services.AddModuleScan(typeof(ModuleConfig).Assembly);
         services.AddDbContext<AppIdentityDbContext>((provider, builder) =>
         {
             var interceptors = provider.GetServices<ISaveChangesInterceptor>();

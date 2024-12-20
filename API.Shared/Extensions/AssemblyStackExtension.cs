@@ -9,7 +9,7 @@ namespace API.Shared.Extensions;
 
 public static class AssemblyStackExtension
 {
-    public static void AddAssemblyScan(this IServiceCollection services, params Assembly[] assemblies)
+    public static void AddModuleScan(this IServiceCollection services, params Assembly[] assemblies)
     {
         services.AddCarter(configurator: configurator =>
         {
