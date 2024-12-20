@@ -1,6 +1,6 @@
 ﻿namespace API.Modules.Identity.Models.Enums;
 
-public enum ClaimTypeEnum
+public enum ClaimType
 {
     Permission,
     Department

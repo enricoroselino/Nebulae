@@ -2,11 +2,11 @@
 
 namespace API.Modules.Identity.Features.IAM.AddRoleClaim;
 
-public record AddRoleClaimRequest(Guid RoleId, ClaimTypeEnum ClaimTypeEnum, string ClaimValue);
+public record AddRoleClaimRequest(Guid RoleId, ClaimType ClaimType, string ClaimValue);
 
 public class AddRoleClaimEndpoint : ICarterModule
 {
-    private static string ClaimTypeValues => string.Join(", ", Enum.GetNames<ClaimTypeEnum>());
+    private static string ClaimTypeValues => string.Join(", ", Enum.GetNames<ClaimType>());
 
     public void AddRoutes(IEndpointRouteBuilder app)
     {
@@ -19,13 +19,13 @@ public class AddRoleClaimEndpoint : ICarterModule
             {
                 var command = new AddRoleClaimCommand(
                     new RoleId(dto.RoleId),
-                    dto.ClaimTypeEnum.ToString(),
+                    dto.ClaimType.ToString(),
                     dto.ClaimValue
                 );
                 var result = await mediator.Send(command, cancellationToken);
                 return result.ToMinimalApiResult();
             })
             .WithSummary("Add role claim")
-            .WithDescription($"[{nameof(AddRoleClaimRequest.ClaimTypeEnum)}] Possible Values : {ClaimTypeValues}");
+            .WithDescription($"[{nameof(AddRoleClaimRequest.ClaimType)}] Possible Values : {ClaimTypeValues}");
     }
 }

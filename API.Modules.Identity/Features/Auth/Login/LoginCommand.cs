@@ -1,6 +1,7 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using API.Shared.Utilities.TokenProvider;
+using Shared.Helpers;
 using Shared.Models;
 using Shared.Utilities.Hasher;
 
@@ -32,14 +33,14 @@ public class LoginAppCommandHandler : ICommandHandler<LoginCommand, Result<AuthT
         user.LoggedIn();
         await _userRepository.SaveChangesAsync(cancellationToken);
 
-        var claims = new List<Claim>
+        var defaultClaims = new List<Claim>
         {
             new Claim(JwtRegisteredClaimNames.Sub, user.Id.Value.ToString()),
             new Claim(JwtRegisteredClaimNames.Name, user.Fullname),
             new Claim(JwtRegisteredClaimNames.Email, user.Email)
         };
-
-        var authToken = _tokenProvider.Create(claims, "Nebulae");
+        
+        var authToken = _tokenProvider.Create(defaultClaims, "Nebulae");
         return Result.Success(authToken);
     }
 }

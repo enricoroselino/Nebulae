@@ -6,7 +6,8 @@ public class UserClaimConfiguration : IEntityTypeConfiguration<UserClaim>
     {
         builder.HasKey(c => c.Id);
         builder.Property(c => c.Id)
-            .HasConversion(c => c.Value, c => new UserClaimId(c));
+            .HasConversion(c => c.Value, c => new UserClaimId(c))
+            .ValueGeneratedOnAdd();
 
         builder.Property(c => c.ClaimType)
             .HasMaxLength(50)
