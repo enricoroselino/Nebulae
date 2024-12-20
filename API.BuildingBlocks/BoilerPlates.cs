@@ -2,7 +2,7 @@
 using System.Text.Json.Serialization;
 using API.BuildingBlocks.Configurations;
 using API.BuildingBlocks.Configurations.Interceptors;
-using API.Shared.Extensions;
+using Asp.Versioning;
 using Carter;
 using FluentValidation;
 using Microsoft.AspNetCore.Builder;
@@ -32,6 +32,21 @@ public static class BoilerPlates
             options.SerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
             options.SerializerOptions.WriteIndented = true;
             options.SerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+        });
+
+        services.AddApiVersioning(options =>
+        {
+            options.DefaultApiVersion = new ApiVersion(1);
+            options.AssumeDefaultVersionWhenUnspecified = true;
+            options.ReportApiVersions = true;
+            options.ApiVersionReader = ApiVersionReader.Combine(
+                new UrlSegmentApiVersionReader(),
+                new HeaderApiVersionReader("X-Api-Version")
+            );
+        }).AddApiExplorer(options =>
+        {
+            options.GroupNameFormat = "'v'V";
+            options.SubstituteApiVersionInUrl = true;
         });
 
         // API documentation
@@ -80,6 +95,16 @@ public static class BoilerPlates
         app.UseAuthentication();
         app.UseAuthorization();
 
-        app.MapGroup("api").MapCarter();
+        var apiVersionSet = app.NewApiVersionSet()
+            .HasApiVersion(new ApiVersion(1))
+            // .HasApiVersion(new ApiVersion(2))
+            .ReportApiVersions()
+            .Build();
+
+        var versionGroup = app
+            .MapGroup("api/v{version:apiVersion}")
+            .WithApiVersionSet(apiVersionSet);
+
+        versionGroup.MapCarter();
     }
 }
